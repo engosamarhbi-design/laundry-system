@@ -1,5 +1,39 @@
 # laundry-system
 
+## رفع الواجهة على Hostinger عبر ربط GitHub
+
+هوستنجر (Shared Hosting) عادةً ما يشغّل مواقع ثابتة (HTML/CSS/JS) بسهولة، لكنه لا يشغّل Node.js API كخدمة دائمة. لذلك نستخدم هذا الأسلوب:
+
+- GitHub Actions يبني الواجهة تلقائيًا
+- ثم ينشر ملفات الواجهة الجاهزة في فرع اسمه `hostinger`
+- Hostinger يسحب هذا الفرع إلى `public_html`
+
+### 1) فعّل Workflow الخاص بـ Hostinger
+
+في GitHub → Actions شغّل Workflow باسم:
+
+**Deploy to Hostinger (static)**
+
+بعدها سيُنشئ/يحدّث فرع: `hostinger` (وفيه `index.html` وملفات `assets/`).
+
+### 2) اربط Hostinger مع الفرع `hostinger`
+
+في hPanel (Hostinger):
+
+1) Websites → Manage → Advanced → **Git**
+2) اربط الريبو من GitHub
+3) اختر الفرع: `hostinger`
+4) اختر مسار النشر: `public_html`
+
+### 3) ربط الواجهة بالـAPI
+
+ضع رابط الـAPI في GitHub Variable:
+
+- Settings → Secrets and variables → Actions → Variables
+- `VITE_API_BASE_URL` = `https://YOUR-API-DOMAIN/api`
+
+ثم أعد تشغيل Workflow الخاص بـ Hostinger.
+
 ## تشغيل الواجهة على GitHub Pages
 
 هذا الريبو يحتوي Workflow جاهز للنشر على GitHub Pages.
