@@ -5,6 +5,8 @@ import path from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // GitHub Pages serves the app under /<repo>/
+  base: process.env.BASE_PATH || '/',
   plugins: [react()],
   server: {
     fs: {
